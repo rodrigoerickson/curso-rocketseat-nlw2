@@ -1,11 +1,11 @@
 import React from 'react';
-import Lading from './pages/landing'
 
 import './assets/styles/globals.css'
+import Routes from './routes';
 
 function App() {
   return (
-      <Lading />
+      <Routes />
   );
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PageHeader from '../../components/PageHeader';
 import Input from '../../components/Input';
 import Textearea from '../../components/Textarea';
@@ -8,6 +8,28 @@ import './styles.css';
 import Select from '../../components/Select';
 
 function TeacherForm() {
+
+    const [scheduleItems, setScheduleItems] = useState([
+        {
+            week_day:0,
+            from:'',
+            to:''
+        }
+    ])
+
+    function addNewScheduleItem(){
+
+        setScheduleItems([
+            ...scheduleItems,
+            {
+                week_day:0,
+                from:'',
+                to:''
+            } 
+        ])
+        
+    }
+
     return (
         <div id="page-teacher-form" className="container">
            <PageHeader title="Que incrível que você quer dar aulas."
@@ -37,7 +59,33 @@ function TeacherForm() {
                     <Input name="cost" label="Custo da sua hora por aula" />
                 </fieldset>
                 <fieldset>
-                    <legend>Horários disponíveis</legend>
+                    <legend>
+                        Horários disponíveis
+                        <button type="button" onClick={addNewScheduleItem}>
+                            + Novo horário
+                        </button>
+                    </legend>
+
+                    {
+                        scheduleItems.map(sheduleItem => {
+                            return(
+                                <div key={sheduleItem.week_day} className="schedule-item">
+                                    <Select
+                                        name="subject"
+                                        label="Matéria" 
+                                        options={[
+                                            { value:'Artes', label:'Artes'},
+                                            { value:'Artes', label:'Artes'},
+                                            { value:'Artes', label:'Artes'},
+                                            { value:'Artes', label:'Artes'}
+                                        ]}
+                                    />
+                                    <Input name="from" label="Das" type="time" />
+                                    <Input name="to" label="Até" type="time" />
+                                </div>
+                            )
+                        })
+                    }
                 </fieldset>
 
                 <footer>

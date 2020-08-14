@@ -2,34 +2,52 @@ import React from 'react';
 import whatsappIcon from '../../assets/images/icons/whatsapp.svg';
 
 import './styles.css'
+import api from '../../services/api';
 
-function TeacherItem() {
+export interface Teacher{
+    id: number;
+    avatar: string;
+    bio: string;
+    cost: number;
+    name: string;
+    subject: string;
+    whatsapp: string;
+
+}
+
+interface TeacherItemProps {
+    teacher: Teacher;
+}
+
+const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
+    function createNewConnection () {
+        api.post('connections',{
+            user_id:teacher.id,
+        })
+    }
     return (
         <article className="teacher-item">
             <header>
-                <img src="https://avatars1.githubusercontent.com/u/20190919?s=460&u=96e344efef5a91866170185a091dc8d802d3b357&v=4" alt="Rodrigo erickson" />
+                <img src={teacher.avatar} alt={teacher.name} />
                 <div>
                     <strong>
-                        Rodrigo Erickson
-                            </strong>
-                    <span>Química</span>
+                        {teacher.name}
+                    </strong>
+                    <span>{teacher.subject}</span>
                 </div>
             </header>
             <p>
-                Entusiasta das melhores tecnologias de química avançada.
-                        <br /><br />
-                Apaixonado por explodir coisas em laboratório e por mudar a vida das pessoas através de experiências.
-                Mais de 200.000 pessoas já passaram por uam das minhas explosões.
-                    </p>
+                {teacher.bio}
+            </p>
             <footer>
                 <p>
                     Preço/hora
-                            <strong>R$80,00</strong>
+                            <strong>R${teacher.cost}</strong>
                 </p>
-                <button type='button'>
+                <a target="_blank" onClick={createNewConnection} href={`https://wa.me/${teacher.whatsapp}`}>
                     <img src={whatsappIcon} alt="Whatsapp" />
                     Entrar em contato
-                        </button>
+                        </a>
             </footer>
         </article>
     )
